@@ -1,0 +1,36 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+h1 {
+  font-size: 48px;
+  line-height: normal;
+}
+
+h2 {
+  font-size: 24px;
+  line-height: 24px;
+}
+
+h3 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+h4 {
+  font-size: 15px;
+  line-height: normal;
+}
+h5 {
+  font-size: 14px;
+  line-height: normal;
+}
+h6 {
+  font-size: 13px;
+  line-height: normal;
+}
+
+p {
+  font-size: 16px;
+  line-height: 24px;
+}
