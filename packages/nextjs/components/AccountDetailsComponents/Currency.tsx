@@ -54,7 +54,7 @@ const Currency = ({ currency, setCurrency }: CurrencyProps) => {
         {currency === "eth" ? <EthSvg /> : <DollarSvg />}
         {isCurrecyOpen ? (
           <Input
-            className="h-4  flex-1 cursor-pointer bg-transparent text-[16px] text-[#A6A6A6] px-px font-medium leading-4 ring-offset-0 focus-visible:ring-0 outline-none border-none border-transparent focus-visible:ring-offset-0"
+            className="h-4 flex-1 cursor-pointer bg-transparent text-[16px] text-[#A6A6A6] px-px font-medium leading-4 ring-offset-0 focus-visible:ring-0 outline-none border-none border-transparent focus-visible:ring-offset-0"
             value={amount}
             onChange={onChangleHandle}
             ref={inputRef}
