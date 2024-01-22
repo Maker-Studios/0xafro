@@ -49,12 +49,12 @@ const Currency = ({ currency, setCurrency }: CurrencyProps) => {
   });
 
   return (
-    <div className="flex justify-between pr-2 py-2 pl-4  rounded-[8px] bg-[#F9FBFC]">
-      <div className="flex items-center space-x-2 py-2">
+    <div className="flex justify-between pr-2 py-2 pl-4 space-x-2  rounded-[8px] bg-[#F9FBFC]">
+      <div className="flex items-center space-x-2 py-2 w-full">
         {currency === "eth" ? <EthSvg /> : <DollarSvg />}
         {isCurrecyOpen ? (
           <Input
-            className="h-6 w-24 cursor-pointer bg-transparent   ring-0"
+            className="h-4  flex-1 cursor-pointer bg-transparent text-[16px] text-[#A6A6A6] px-px font-medium leading-4 ring-offset-0 focus-visible:ring-0 outline-none border-none border-transparent focus-visible:ring-offset-0"
             value={amount}
             onChange={onChangleHandle}
             ref={inputRef}
