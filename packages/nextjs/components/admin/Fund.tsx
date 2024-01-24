@@ -53,7 +53,11 @@ const Fund = ({ isFundOpen, setIsFundOpen, ensName, isAuthenticated }: FundProps
         className="bg-[#000] text-[11px] px-[11px] py-[18px] h-0 md:w-auto w-full  rounded-full transition duration-150 ease-in-out hover:bg-[#000]/80"
       />
       <Dialog onOpenChange={setIsFundOpen} open={isFundOpen}>
-        <DialogContent className="md:space-y-8 space-y-[25px] md:p-6 p-[19px]">
+        <DialogContent
+          className="md:space-y-8 space-y-[25px] md:p-6 p-[19px]"
+          onOpenAutoFocus={e => e.preventDefault()}
+          onCloseAutoFocus={e => e.preventDefault()}
+        >
           <div className="flex justify-between items-center ">
             <h3 className="text-[20px] font-ibm_plex_mono font-medium leading-6">Fund stream</h3>
             <span
