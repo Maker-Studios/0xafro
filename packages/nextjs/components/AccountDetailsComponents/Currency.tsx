@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 import { DollarSvg, EthSvg } from "../Icons/Icons";
 import { Input } from "../ui/input";
 import { useOutsideClick } from "~~/hooks/useOutsideClick";
@@ -10,21 +10,9 @@ interface CurrencyProps {
   setCurrency: Dispatch<SetStateAction<Currencies>>;
 }
 const Currency = ({ currency, setCurrency }: CurrencyProps) => {
-  const [isCurrecyOpen, setIsCurrencyOpen] = useState<boolean>(false);
-  const [amount, setAmount] = useState<string>("000");
+  const [amount, setAmount] = useState<string>("0");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handlePressEnter = useCallback(
-    (event: any) => {
-      if (event.key === "Enter" && amount) {
-        if (amount === "") {
-          setAmount("000");
-        }
-        setIsCurrencyOpen(false);
-      }
-    },
-    [amount],
-  );
   const onChangleHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
     value = value.replace(/[^0-9.]/g, "");
@@ -34,36 +22,23 @@ const Currency = ({ currency, setCurrency }: CurrencyProps) => {
     setAmount(value);
   };
 
-  useEffect(() => {
-    document.addEventListener("keydown", handlePressEnter);
-    return () => {
-      document.removeEventListener("keydown", handlePressEnter);
-    };
-  }, [handlePressEnter]);
-
   useOutsideClick(inputRef, () => {
     if (amount === "") {
-      setAmount("000");
+      setAmount("0");
     }
-    setIsCurrencyOpen(false);
   });
 
   return (
     <div className="flex justify-between pr-2 py-2 pl-4 space-x-2  rounded-[8px] bg-[#F9FBFC]">
       <div className="flex items-center space-x-2 py-2 w-full">
         {currency === "eth" ? <EthSvg /> : <DollarSvg />}
-        {isCurrecyOpen ? (
-          <Input
-            className="h-4 flex-1 cursor-pointer bg-transparent text-[16px] text-[#A6A6A6] px-px font-medium leading-4 ring-offset-0 focus-visible:ring-0 outline-none border-none border-transparent focus-visible:ring-offset-0"
-            value={amount}
-            onChange={onChangleHandle}
-            ref={inputRef}
-          />
-        ) : (
-          <p className="text-[#A6A6A6] font-medium leading-4 cursor-default" onClick={() => setIsCurrencyOpen(true)}>
-            {amount}
-          </p>
-        )}
+
+        <Input
+          className="h-4 flex-1 cursor-pointer bg-transparent text-[16px] text-[#A6A6A6] px-px font-medium leading-4 ring-offset-0 focus-visible:ring-0 outline-none border-none border-transparent focus-visible:ring-offset-0"
+          value={amount}
+          onChange={onChangleHandle}
+          ref={inputRef}
+        />
       </div>
       <div
         className="bg-white dark:bg-[#0D0D0D]  flex justify-center items-center px-1 py-[4px] rounded-full space-x-[6px]"

@@ -75,7 +75,7 @@ const Fund = ({ isFundOpen, setIsFundOpen, ensName, isAuthenticated }: FundProps
                 <img src="/avatar.png" alt="avatar image" className="w-full h-full" />
               </div>
               <span className="flex items-start space-x-[11px]">
-                <p className="text-[11px]  font-bold">{ensName}</p>
+                <p className="text-[11px] font-bold">{ensName}</p>
                 {copied ? <CheckedSvg /> : <CopySvg className="cursor-pointer" onClick={handleCopyClick} />}
               </span>
             </div>
