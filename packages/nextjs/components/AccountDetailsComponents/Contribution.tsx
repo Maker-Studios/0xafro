@@ -20,7 +20,7 @@ const Contribution = ({ image, date, ensName, destribution, coverImages }: Contr
   const [selectionId, setSelectionId] = useState<ImageObject["id"]>("");
 
   //TODO: Inserting cover images array
-  const CoverImageToMap = coverImages?.slice(0, 3);
+  const coverImageToMap = coverImages?.slice(0, 3);
 
   const handleCopyClick = async () => {
     try {
@@ -68,21 +68,22 @@ const Contribution = ({ image, date, ensName, destribution, coverImages }: Contr
                   </div>
                 </div>
                 <p className="text-[12px] text-[#878787] font-medium leading-[19px] w-full">{destribution}</p>
+
                 {coverImages !== undefined && coverImages.length !== 0 && (
                   <div
                     className={cn(
-                      "h-[86px] w-full grid  gap-1 rounded-[8px] ",
-                      CoverImageToMap?.length === 1 ? "grid-cols-1" : "grid-cols-3",
+                      "h-[86px] w-full grid gap-1 rounded-[8px]",
+                      coverImageToMap?.length === 1 ? "grid-cols-1" : "grid-cols-3",
                     )}
                   >
-                    {CoverImageToMap?.map((img, i) => (
+                    {coverImageToMap?.map((img, i) => (
                       <div
                         key={img.id}
                         className={cn(
                           "bg-[#E0E0E0]/25 w-full h-full relative overflow-hidden cursor-pointer",
                           i === 0 && " rounded-l-[8px]",
                           i === 2 && " rounded-r-[8px]",
-                          CoverImageToMap?.length === 1 && "rounded-[8px]",
+                          coverImageToMap?.length === 1 && "rounded-[8px]",
                         )}
                         onClick={() => {
                           setIsImageOpen(true), setSelectionId(img.id);
@@ -108,7 +109,7 @@ const Contribution = ({ image, date, ensName, destribution, coverImages }: Contr
         selectionId={selectionId}
         setIsImageOpen={setIsImageOpen}
         setSelectionId={setSelectionId}
-        CoverImageToMap={CoverImageToMap}
+        coverImageToMap={coverImageToMap}
         coverImages={coverImages}
       />
     </>

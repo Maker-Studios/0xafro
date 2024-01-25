@@ -80,8 +80,6 @@ const Contributions = () => {
     setIsVisible(prev => !prev);
   };
 
-  console.log(contributions.length);
-
   return (
     <div className="space-y-2 w-full">
       <AnimatePresence initial={false}>
