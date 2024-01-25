@@ -6,7 +6,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { v4 } from "uuid";
 import { cn } from "~~/lib/utils";
 
-386723;
 const Contributions = () => {
   const [visibleContributions, setVisibleContributions] = useState(4);
   const allContributions = [
@@ -17,7 +16,7 @@ const Contributions = () => {
       date="2023-10-01"
       coverImages={[
         { id: v4(), url: "/Frame40.png" },
-        { id: v4(), url: "/Frame40.png" },
+        { id: v4(), url: "/1.jpg" },
       ]}
     />,
     <Contribution
@@ -26,8 +25,8 @@ const Contributions = () => {
       date="2023-10-01"
       coverImages={[
         { id: v4(), url: "/Frame40.png" },
-        { id: v4(), url: "/Frame40.png" },
-        { id: v4(), url: "/Frame40.png" },
+        { id: v4(), url: "/2.jpg" },
+        { id: v4(), url: "/3.jpg" },
         { id: v4(), url: "/Frame40.png" },
       ]}
     />,

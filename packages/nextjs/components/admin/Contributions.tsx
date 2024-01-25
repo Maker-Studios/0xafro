@@ -7,6 +7,7 @@ import { cn } from "~~/lib/utils";
 
 const Contributions = () => {
   const [visibleContributions, setVisibleContributions] = useState(4);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const allContributions = [
     {
       image: "/avatar.png",
@@ -15,8 +16,9 @@ const Contributions = () => {
         "Blockchain implementation of usePage3 with Sacffold eth : https://github.com/Maker-Studios/usepage3-scaffold",
       date: "2023-10-01",
       coverImages: [
+        { id: v4(), url: "/1.jpg" },
         { id: v4(), url: "/Frame40.png" },
-        { id: v4(), url: "/Frame40.png" },
+        { id: v4(), url: "/2.jpg" },
       ],
     },
     {
@@ -24,10 +26,8 @@ const Contributions = () => {
       destribution: "Technical Implementation for usePage3",
       date: "2023-10-01",
       coverImages: [
-        { id: v4(), url: "/Frame40.png" },
-        { id: v4(), url: "/Frame40.png" },
-        { id: v4(), url: "/Frame40.png" },
-        { id: v4(), url: "/Frame40.png" },
+        { id: v4(), url: "/1.jpg" },
+        { id: v4(), url: "/2.jpg" },
       ],
     },
 
@@ -51,9 +51,9 @@ const Contributions = () => {
       destribution: "Technical Implementation for usePage3",
       date: "2023-10-01",
       coverImages: [
-        { id: v4(), url: "/Frame40.png" },
-        { id: v4(), url: "/Frame40.png" },
-        { id: v4(), url: "/Frame40.png" },
+        { id: v4(), url: "/1.jpg" },
+        { id: v4(), url: "/3.jpg" },
+        { id: v4(), url: "/2.jpg" },
         { id: v4(), url: "/Frame40.png" },
       ],
     },
@@ -65,7 +65,7 @@ const Contributions = () => {
       date: "2023-10-01",
       coverImages: [
         { id: v4(), url: "/Frame40.png" },
-        { id: v4(), url: "/Frame40.png" },
+        { id: v4(), url: "/1.jpg" },
       ],
     },
   ];
@@ -73,10 +73,14 @@ const Contributions = () => {
 
   const loadMoreContributions = () => {
     setVisibleContributions(prev => prev + 4);
+    setIsVisible(prev => !prev);
   };
   const resetContributions = () => {
     setVisibleContributions(4);
+    setIsVisible(prev => !prev);
   };
+
+  console.log(contributions.length);
 
   return (
     <div className="space-y-2 w-full">
@@ -96,21 +100,22 @@ const Contributions = () => {
           </motion.div>
         ))}
       </AnimatePresence>
-      <div className={cn("flex justify-center", visibleContributions === contributions.length + 1 && "hidden")}>
-        <Button
-          text="Load more contributions"
-          variant={"ghost"}
-          className="py-[10px] px-2 border border-black rounded-full"
-          onClick={loadMoreContributions}
-        />
-      </div>
-      <div className={cn("hidden justify-center", visibleContributions === contributions.length + 1 && "flex")}>
-        <Button
-          text="Show less"
-          variant={"ghost"}
-          className="py-[10px] px-2 border border-black rounded-full"
-          onClick={resetContributions}
-        />
+      <div className={cn("flex justify-center", contributions.length < 4 && "hidden")}>
+        {!isVisible ? (
+          <Button
+            text="Load more contributions"
+            variant={"ghost"}
+            className="py-[17px] px-2 h-0 border-[0.5px] border-[#E1E1E1] bg-white rounded-full text-[12px]"
+            onClick={loadMoreContributions}
+          />
+        ) : (
+          <Button
+            text="Show less"
+            variant={"ghost"}
+            className="py-[17px] px-2 h-0 border-[0.5px] border-[#E1E1E1] bg-white rounded-full text-[12px]"
+            onClick={resetContributions}
+          />
+        )}
       </div>
     </div>
   );
