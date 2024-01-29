@@ -1,3 +1,4 @@
+import { builderList } from "../../../builderList";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 
@@ -21,18 +22,24 @@ const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEn
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  await deploy("YourContract", {
+  await deploy("BuilderStreams", {
     from: deployer,
     // Contract constructor arguments
-    args: [deployer],
+    args: [],
     log: true,
     // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
     // automatically mining the contract deployment transaction. There is no effect on live networks.
     autoMine: true,
   });
 
-  // Get the deployed contract
-  // const yourContract = await hre.ethers.getContract("YourContract", deployer);
+  const BuilderStreams = await hre.ethers.getContract("BuilderStreams", deployer);
+
+  console.log("🫡 adding batch of builders");
+  const builderStakes = Array(builderList.length).fill("500000000000000000");
+  await BuilderStreams.addBatch(builderList, builderStakes);
+
+  // console.log("🏷 handing ownership over to atg.eth");
+  // await yourContract.transferOwnership("0x34aA3F359A9D614239015126635CE7732c18fDF3");
 };
 
 export default deployYourContract;

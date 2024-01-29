@@ -2,6 +2,7 @@ import { HTMLAttributes, useState } from "react";
 import { Button } from "../ui/button";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "~~/lib/utils";
+import { useAccountModal } from "@rainbow-me/rainbowkit"
 
 interface AccountProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
@@ -14,6 +15,7 @@ interface AccountProps extends HTMLAttributes<HTMLDivElement> {
 
 const Account = ({ className, address, ensName, amount, image, isOpen }: AccountProps) => {
   const [copied, setCopied] = useState(false);
+  const { openAccountModal } = useAccountModal();
 
   const handleCopyClick = async () => {
     try {
@@ -45,11 +47,11 @@ const Account = ({ className, address, ensName, amount, image, isOpen }: Account
             boxShadow: "0px 12.5px 25px 0px rgba(0, 0, 0, 0.05)",
           }}
           onClick={e => e.stopPropagation()}
-          // ref={ref}
+        // ref={ref}
         >
           <div className="flex flex-col space-y-[10px]">
             <div className="w-[61px] h-[61px] rounded-full relative mx-auto">
-              <img src={image} alt="avatar image" className="w-full h-full" />
+              <img src={image} alt="avatar image" className="w-full h-full rounded-full" />
             </div>
             <span className="space-y-[6px]">
               <p className="text-[13px] font-bold leading-[13px]">{ensName}</p>
@@ -83,6 +85,7 @@ const Account = ({ className, address, ensName, amount, image, isOpen }: Account
             <Button
               text="Disconnect"
               className="text-[12px] font-bold leading-[11px] rounded-r-full py-5 px-2 h-0 text-black bg-[#F8F8F8] hover:bg-[#F8F8F8]/50 transition duration-300 ease-in-out"
+              onClick={openAccountModal}
             />
           </div>
         </motion.div>

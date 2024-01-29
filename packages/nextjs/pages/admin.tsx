@@ -36,7 +36,7 @@ const AdminPage = () => {
         </div>
         <div className="space-y-6 bg-[#F9FBFC] p-4 rounded-[24px]">
           <p className="font-medium font-ibm_plex_mono">Contributions</p>
-          <Contributions />
+          {/* <Contributions /> */}
         </div>
         <div>
           <Projects />

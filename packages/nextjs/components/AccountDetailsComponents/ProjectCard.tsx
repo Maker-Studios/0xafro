@@ -34,7 +34,7 @@ const ProductCard = ({ icon, settingTitle, color, bgColor, image, description }:
           <div className="flex items-center space-x-2">
             <p className="text-[12px] font-medium text-[#9F9F9F]">Spend</p>
             <span className="flex items-center space-x-1">
-              <EthSvg />
+              <p className="text-[12px] font-medium">Ξ</p>
               <p className="text-[12px] font-medium">0.5</p>
             </span>
           </div>

@@ -1,9 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AvatarSvg, CheckedSvg, CopySvg } from "../Icons/Icons";
 import Fund from "./Fund";
 import WithDraw from "./WithDraw";
+import { Blockchain } from "@ankr.com/ankr.js";
+import { ethers } from "ethers";
+import { isAddress } from "viem";
+import { useAccount, useBalance } from "wagmi";
+import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
 import { cn } from "~~/lib/utils";
 import { Currencies } from "~~/utils/enums";
+import { ankrProvider, formatAddress } from "~~/utils/scaffold-eth/common";
 
 export interface ImageObject {
   id: string;
@@ -11,16 +17,36 @@ export interface ImageObject {
 }
 /* eslint-disable react-hooks/rules-of-hooks */
 interface StreamContractBalanceProps {
-  address?: string;
+  address?: `0x${string}`;
+  isContributor: boolean;
 }
-const StreamContractBalance = ({ address = "0x3DD...A1ff" }: StreamContractBalanceProps) => {
+const StreamContractBalance = ({ address = "0x3DD...A1ff", isContributor }: StreamContractBalanceProps) => {
   const [currency, setCurrency] = useState<Currencies>(Currencies.ETH);
+  const [usdPrice, setUsdPrice] = useState<number>(0);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isAuthenticated, setIsAuthenticate] = useState<boolean>(true);
   const [isFundOpen, setIsFundOpen] = useState<boolean>(false);
   const [isWithdrawOpen, setIsWithdrawOpen] = useState<boolean>(false);
   const [copied, setCopied] = useState(false);
   // const [images, setImages] = useState<ImageObject[]>([]);
+
+  // TODO : change this to check if connected address is a builder
+  const { address: userAddress } = useAccount();
+
+  const { data: streamBalance } = useBalance({
+    address,
+  });
+
+  const getTokenPrice = async () => {
+    const ethInfo = await ankrProvider.getTokenPrice({
+      blockchain: "eth",
+    });
+
+    setUsdPrice(Number(ethInfo.usdPrice));
+  };
+
+  useEffect(() => {
+    getTokenPrice();
+  }, []);
 
   //TODO: fixing focus on The Text area
 
@@ -49,7 +75,7 @@ const StreamContractBalance = ({ address = "0x3DD...A1ff" }: StreamContractBalan
           <span className="flex items-center space-x-[11px]">
             <AvatarSvg />
             <span className="flex items-center space-x-2">
-              <p className="">{address}</p>
+              <p className="">{isAddress(address) ? formatAddress(address) : address}</p>
               {copied ? <CheckedSvg /> : <CopySvg className="cursor-pointer" onClick={handleCopyClick} />}
             </span>
           </span>
@@ -85,17 +111,37 @@ const StreamContractBalance = ({ address = "0x3DD...A1ff" }: StreamContractBalan
         </div>
         <div className="flex items-center justify-between">
           <div className="space-y-1">
-            <span className="flex items-center space-x-px">
-              <p className="text-[32px] font-medium">0.00</p>
-              <p className="font-medium">USD</p>
+            <span className="flex items-center space-x-2">
+              <p className="text-[32px] font-medium">
+                {(currency === "eth"
+                  ? Number(streamBalance?.formatted)
+                  : Number(streamBalance?.formatted) * Number(usdPrice)
+                ).toFixed(2)}
+              </p>
+              <p className="font-medium">{currency.toUpperCase()}</p>
             </span>
-            <p className="text-[#909090] text-[12px]">Optimism</p>
+            <p className="text-red-400 text-[12px]">Optimism</p>
           </div>
         </div>
       </div>
       <div className="flex w-full md:justify-end justify-between space-x-3">
-        <Fund isFundOpen={isFundOpen} setIsFundOpen={setIsFundOpen} ensName="leyeconnect.eth" isAuthenticated={false} />
-        {isAuthenticated && <WithDraw isWithdrawOpen={isWithdrawOpen} setIsWithdrawOpen={setIsWithdrawOpen} />}
+        {userAddress ? (
+          <>
+            <Fund
+              isFundOpen={isFundOpen}
+              setIsFundOpen={setIsFundOpen}
+              address={userAddress as `0x${string}`}
+              isAuthenticated={false}
+              usdPrice={usdPrice}
+              streamAddress={address}
+            />
+            {isContributor && (
+              <WithDraw isWithdrawOpen={isWithdrawOpen} setIsWithdrawOpen={setIsWithdrawOpen} usdPrice={usdPrice} />
+            )}
+          </>
+        ) : (
+          <p className="text-xs italic text-[#878787]">Connect wallet to fund/withdraw from stream</p>
+        )}
       </div>
     </div>
   );

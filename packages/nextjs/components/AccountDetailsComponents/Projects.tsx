@@ -4,8 +4,7 @@ const Projects = () => {
   return (
     <div className="space-y-6">
       <ProjectCard
-        description="Blockchain implementation of usePage3 with Sacffold eth:
-      https://github.com/ Maker-Studios/usepage3-scaffold..."
+        description="Blockchain implementation of usePage3 with Sacffold eth: https://github.com/..."
         icon={
           <svg width={15} height={15} viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -26,8 +25,7 @@ const Projects = () => {
         image="/Frame40.png"
       />
       <ProjectCard
-        description="Blockchain implementation of usePage3 with Sacffold eth:
-      https://github.com/ Maker-Studios/usepage3-scaffold..."
+        description="Blockchain implementation of usePage3 with Sacffold eth: https://github.com/..."
         icon={
           <svg width={15} height={15} viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_110_160)">
@@ -55,8 +53,7 @@ const Projects = () => {
         image="/Frame40.png"
       />
       <ProjectCard
-        description="Blockchain implementation of usePage3 with Sacffold eth:
-      https://github.com/ Maker-Studios/usepage3-scaffold..."
+        description="Blockchain implementation of usePage3 with Sacffold eth: https://github.com/..."
         icon={
           <svg width={15} height={15} viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_110_67)">

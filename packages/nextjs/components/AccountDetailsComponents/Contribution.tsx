@@ -1,24 +1,41 @@
 import { useState } from "react";
 import { AvatarSvg, CalenderSvg, CheckedSvg, CopySvg, EthSvg } from "../Icons/Icons";
-import { ImageObject } from "./StreamContractBalance";
+import { formatEther } from "viem";
+import { useEnsAvatar, useEnsName } from "wagmi";
+// import { ImageObject } from "./StreamContractBalance";
 import { cn } from "~~/lib/utils";
+import { formatAddress } from "~~/utils/scaffold-eth/common";
 
 interface ContributionProps {
-  image?: string;
   date: string;
-  ensName: string;
-  destribution: string;
-  coverImages?: ImageObject[];
+  address: `0x${string}`;
+  amount: bigint;
+  reason: string;
 }
-const Contribution = ({ image, date, ensName, destribution, coverImages }: ContributionProps) => {
+
+// TODO : Redo cover images to come from IPFS
+// coverImages?: ImageObject[];
+
+const Contribution = ({ date, address, amount, reason }: ContributionProps) => {
   const [copied, setCopied] = useState(false);
 
   //TODO: Inserting cover images array
-  const CoverImageToMap = coverImages?.slice(0, 3);
+  // const CoverImageToMap = coverImages?.slice(0, 3);
+
+  const { data: ensName } = useEnsName({
+    address,
+    chainId: 1,
+  });
+
+  const { data: ensAvatar } = useEnsAvatar({
+    name: ensName,
+    enabled: !!ensName,
+    chainId: 1,
+  });
 
   const handleCopyClick = async () => {
     try {
-      await navigator.clipboard.writeText(ensName);
+      await navigator.clipboard.writeText(address);
       setCopied(true);
     } catch (error) {
       console.error("Unable to copy text: ", error);
@@ -50,18 +67,22 @@ const Contribution = ({ image, date, ensName, destribution, coverImages }: Contr
               <div className="flex justify-between items-center">
                 <div className="flex items-center space-x-2">
                   <div className="w-5 h-5 relative rounded-full">
-                    {image ? <img src={image} className="w-full h-full" /> : <AvatarSvg width={20} height={20} />}
+                    {ensAvatar ? (
+                      <img src={ensAvatar} className="w-full h-full rounded-full" />
+                    ) : (
+                      <AvatarSvg width={20} height={20} />
+                    )}
                   </div>
-                  <h6 className="text-[15px] font-medium">{ensName}</h6>
+                  <h6 className="text-[15px] font-medium">{ensName || formatAddress(address)}</h6>
                   {copied ? <CheckedSvg /> : <CopySvg className="cursor-pointer" onClick={handleCopyClick} />}
                 </div>
                 <div className="flex items-center space-x-[4px] py-1 pr-[7px] pl-[5.5px]">
-                  <EthSvg />
-                  <p>0.5</p>
+                  <p>Ξ</p>
+                  <p>{Number(formatEther(amount)).toFixed(2)}</p>
                 </div>
               </div>
-              <p className="text-[12px] text-[#878787] font-medium leading-[19px] w-full">{destribution}</p>
-              {coverImages !== undefined && coverImages.length !== 0 && (
+              <p className="text-[12px] text-[#878787] font-medium leading-[19px] w-full">{reason}</p>
+              {/* {coverImages !== undefined && coverImages.length !== 0 && (
                 <div
                   className={cn(
                     "h-[86px] w-full grid  gap-1 rounded-[8px]",
@@ -81,11 +102,8 @@ const Contribution = ({ image, date, ensName, destribution, coverImages }: Contr
                       <img src={img.url} alt="avatar image" className="w-full h-full " style={{ objectFit: "cover" }} />
                     </div>
                   ))}
-
-                  {/* <div className="bg-[#E0E0E0]/25"></div>
-                  <div className="bg-[#E0E0E0]/25 rounded-r-[8px]"></div> */}
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </div>
