@@ -5,7 +5,7 @@ const Projects = () => {
     <div className="space-y-6">
       <ProjectCard
         name="Token legacy"
-        description="Safely send assets to designated beneficiaries at the event of your passing."
+        description="Your onchain will for assets distribution in the event of your passing."
         status="ongoing"
         image="/tokenlegacy.jpg"
       />

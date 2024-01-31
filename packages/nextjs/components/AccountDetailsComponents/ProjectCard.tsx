@@ -55,7 +55,7 @@ const ProductCard = ({ image, description, name, status }: ProductCardProps) => 
           <p className="font-medium leading-6">{name}</p>
           <p className="text-[12px] text-[#878787] font-medium leading-[18px]">{description}</p>
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-end">
           <div className="flex items-center space-x-1 py-1 px-2 rounded-full" style={{ background: accent.bgColor }}>
             {status === "ongoing" && <OngoingSvg />}
             {status === "completed" && <CompletedSvg />}
@@ -66,13 +66,13 @@ const ProductCard = ({ image, description, name, status }: ProductCardProps) => 
             </p>
           </div>
 
-          <div className="flex items-center space-x-2">
+          {/* <div className="flex items-center space-x-2">
             <p className="text-[12px] font-medium text-[#9F9F9F]">Spend</p>
             <span className="flex items-center space-x-1">
               <p className="text-[12px] font-medium">Ξ</p>
               <p className="text-[12px] font-medium">0.5</p>
             </span>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
