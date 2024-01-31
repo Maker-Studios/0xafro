@@ -4,6 +4,7 @@ const Projects = () => {
   return (
     <div className="space-y-6">
       <ProjectCard
+        projectName="Token legacy"
         description="Blockchain implementation of usePage3 with Sacffold eth: https://github.com/..."
         icon={
           <svg width={15} height={15} viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -22,9 +23,10 @@ const Projects = () => {
         settingTitle="Ongoing"
         color="#9747FF"
         bgColor="#F4F3FF"
-        image="/Frame40.png"
+        image="/tokenlegacy.jpg"
       />
       <ProjectCard
+        projectName="Mypage3"
         description="Blockchain implementation of usePage3 with Sacffold eth: https://github.com/..."
         icon={
           <svg width={15} height={15} viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -50,9 +52,10 @@ const Projects = () => {
         settingTitle="Completed"
         color="#2360FF"
         bgColor="#F4F3FF"
-        image="/Frame40.png"
+        image="/mypage3.jpg"
       />
       <ProjectCard
+        projectName="Multidrop"
         description="Blockchain implementation of usePage3 with Sacffold eth: https://github.com/..."
         icon={
           <svg width={15} height={15} viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -86,7 +89,7 @@ const Projects = () => {
           </svg>
         }
         settingTitle="Live"
-        image="/Frame40.png"
+        image="/multidrop.jpg"
         color="#03A300"
         bgColor="#F6FBF6"
       />

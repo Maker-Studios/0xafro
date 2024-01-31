@@ -1,5 +1,3 @@
-import { EthSvg } from "../Icons/Icons";
-
 interface ProductCardProps {
   icon: React.ReactNode;
   settingTitle: string;
@@ -7,8 +5,9 @@ interface ProductCardProps {
   bgColor: string;
   image: string;
   description: string;
+  projectName: string;
 }
-const ProductCard = ({ icon, settingTitle, color, bgColor, image, description }: ProductCardProps) => {
+const ProductCard = ({ icon, settingTitle, color, bgColor, image, description, projectName }: ProductCardProps) => {
   return (
     <div
       className="flex space-x-4 border-[0.5px] border-[#CDDFE9] rounded-2xl p-4 bg-white"
@@ -21,7 +20,7 @@ const ProductCard = ({ icon, settingTitle, color, bgColor, image, description }:
       </div>
       <div className="flex flex-col justify-between space-y-6">
         <div className="space-y-2">
-          <p className="font-medium leading-6">Product name</p>
+          <p className="font-medium leading-6">{projectName}</p>
           <p className="text-[12px] text-[#878787] font-medium leading-[18px]">{description}</p>
         </div>
         <div className="flex items-center justify-between">
