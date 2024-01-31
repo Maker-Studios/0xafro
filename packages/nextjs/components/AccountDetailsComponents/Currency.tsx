@@ -8,9 +8,12 @@ import { Currencies } from "~~/utils/enums";
 interface CurrencyProps {
   currency: Currencies;
   setCurrency: Dispatch<SetStateAction<Currencies>>;
+  usdPrice: number;
+  setETHAmount: Dispatch<SetStateAction<string>>;
 }
-const Currency = ({ currency, setCurrency }: CurrencyProps) => {
+const Currency = ({ currency, setCurrency, usdPrice, setETHAmount }: CurrencyProps) => {
   const [amount, setAmount] = useState<string>("");
+  const [usdAmount, setUsdAmount] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onChangleHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +22,13 @@ const Currency = ({ currency, setCurrency }: CurrencyProps) => {
     if (value.startsWith(".")) {
       value = "0" + value;
     }
-    setAmount(value);
+
+    const ethAmount = (currency === Currencies.ETH ? value : Number(value ?? "0") / Number(usdPrice)).toString();
+
+    setETHAmount(ethAmount);
+
+    setAmount(ethAmount);
+    setUsdAmount(currency === Currencies.USD ? value : (Number(value ?? "0") * Number(usdPrice)).toFixed(2));
   };
 
   useOutsideClick(inputRef, () => {
@@ -35,7 +44,7 @@ const Currency = ({ currency, setCurrency }: CurrencyProps) => {
 
         <Input
           className="h-4 flex-1 cursor-pointer bg-transparent text-[16px] placeholder:text-[#A6A6A6] px-px font-medium leading-4 ring-offset-0 focus-visible:ring-0 outline-none border-none border-transparent focus-visible:ring-offset-0"
-          value={amount}
+          value={currency === Currencies.ETH ? amount : usdAmount}
           onChange={onChangleHandle}
           ref={inputRef}
           placeholder="0"

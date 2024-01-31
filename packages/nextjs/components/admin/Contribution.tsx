@@ -1,5 +1,8 @@
+/* eslint-disable jsx-a11y/alt-text */
+
+/* eslint-disable @next/next/no-img-element */
 import { useState } from "react";
-import ImagesSlides from "./Dialogs/ImagesSlides";
+import { ImagesSlides } from "../AccountDetailsComponents";
 import { ImageObject } from "./StreamContractBalance";
 import { AvatarSvg, CalenderSvg, CheckedSvg, CopySvg, EthSvg } from "~~/components/Icons/Icons";
 import { cn } from "~~/lib/utils";
@@ -74,7 +77,7 @@ const Contribution = ({ image, date, ensName, destribution, coverImages }: Contr
                       <div
                         key={img.id}
                         className={cn(
-                          "bg-[#E0E0E0]/25 w-full h-full relative overflow-hidden ",
+                          "bg-[#E0E0E0]/25 w-full h-full relative overflow-hidden cursor-pointer",
                           i === 0 && " rounded-l-[8px]",
                           i === 2 && " rounded-r-[8px]",
                           coverImageToMap?.length === 1 && "rounded-[8px]",
@@ -86,7 +89,7 @@ const Contribution = ({ image, date, ensName, destribution, coverImages }: Contr
                         <img
                           src={img.url}
                           alt="avatar image"
-                          className="w-full h-full"
+                          className="w-full h-full "
                           style={{ objectFit: "cover" }}
                         />
                       </div>

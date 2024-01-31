@@ -1,14 +1,17 @@
-import { Dispatch, HTMLAttributes, useEffect, useRef, useState } from "react";
+import { Dispatch, HTMLAttributes, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Fund from "../AccountDetailsComponents/Fund";
 import { Bag, CaretDown, CloseSvg, MenuSvg } from "../Icons/Icons";
 import Account from "./Account";
+import { useAccountModal } from "@rainbow-me/rainbowkit";
+import { isAddress } from "viem";
+import { useAccount, useBalance, useEnsAvatar, useEnsName } from "wagmi";
 import { cn } from "~~/lib/utils";
+import { formatAddress } from "~~/utils/scaffold-eth/common";
 
 interface AuthenticatedProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
   isAccountOpen: boolean;
-  setIsAuthenticated: Dispatch<React.SetStateAction<boolean>>;
   isFundOpen: boolean;
   isAuthenticated: boolean;
   setIsFundOpen: Dispatch<React.SetStateAction<boolean>>;
@@ -24,6 +27,28 @@ const Authenticated = ({
   pathname,
 }: AuthenticatedProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { address } = useAccount();
+  const { openAccountModal } = useAccountModal();
+
+  const { data: balance } = useBalance({
+    address: address as `0x${string}`,
+  });
+
+  const { data: ensName } = useEnsName({
+    address: address as `0x${string}`,
+    enabled: isAddress(address ?? ""),
+    chainId: 1,
+  });
+
+  const { data: ensAvatar } = useEnsAvatar({
+    name: ensName,
+    enabled: !!ensName,
+    chainId: 1,
+  });
+
+  const formattedBalance = useMemo(() => {
+    return balance ? `${Number(balance?.formatted).toFixed(5)} ${balance?.symbol}` : "";
+  }, [balance]);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -43,9 +68,6 @@ const Authenticated = ({
 
   return (
     <div className={cn("flex items-center md:space-x-[24px] space-x-2")}>
-      <span className="md:block hidden">
-        <Fund isFundOpen={isFundOpen} setIsFundOpen={setIsFundOpen} ensName="leyeconnect.eth" isAuthenticated={true} />
-      </span>
       <span
         className={cn(
           "md:hidden flex items-center justify-center w-[40px] h-[40px] bg-[#F9FBFC] rounded-full cursor-pointer transition duration-300 ease-in-out hover:bg-[#F9FBFC]/70",
@@ -60,8 +82,10 @@ const Authenticated = ({
           <Bag />
         </span>
         <span className="space-y-[3px]">
-          <p className="text-[11px] leading-[11px] font-medium">0.008ETH</p>
-          <p className="text-[#909090] leading-[11px] text-[10px]">Optimism</p>
+          <p className="text-[11px] leading-[11px] font-medium">
+            {formattedBalance}
+          </p>
+          <p className="leading-[11px] text-[10px] text-red-400">Optimism</p>
         </span>
       </span>
       <svg
@@ -79,30 +103,33 @@ const Authenticated = ({
         className="flex items-center space-x-1"
         onClick={() => {
           setIsOpen(prev => !prev);
+          openAccountModal && openAccountModal();
         }}
         ref={containerRef}
       >
         <div className="flex items-center py-[5px] pr-4 pl-2 rounded-l-full  bg-[#F9FBFC] space-x-[11px] cursor-pointer transition duration-300 ease-in-out hover:bg-[#F9FBFC]/70 select-none">
           <div className="w-[22px] h-[22px] rounded-full relative">
-            <img src="/avatar.png" alt="avatar image" className="w-full h-full" />
+            {ensAvatar && <img src={ensAvatar} alt="avatar image" className="w-full h-full rounded-full" />}
           </div>
-          <h6 className="md:block hidden font-medium text-[11px] leading-[11px]">leyeconnect.eth</h6>
+          <h6 className="md:block hidden font-medium text-[11px] leading-[11px]">
+            {ensName || formatAddress(address as `0x${string}`)}
+          </h6>
         </div>
 
         <div className="w-[34px] h-[32px] flex items-center justify-center rounded-r-full bg-[#F9FBFC] cursor-pointer transition duration-300 ease-in-out hover:bg-[#F9FBFC]/70">
           <CaretDown className={cn("transition duration-300 ease-in-out", isOpen && "rotate-180")} />
         </div>
 
-        <Account
-          address="0x3ddjgisnjwd-rnsdjjsdfsddzdsSSdf-fdjjsdDDDD"
+        {/* <Account
+          address={address as string}
           isOpen={isOpen}
-          image="/avatar.png"
-          ensName="leyeconnect.eth"
-          amount="0.008ETH"
-        />
+          image={ensAvatar as string}
+          ensName={ensName || address || ""}
+          amount={`${Number(balance?.formatted).toFixed(5)} ${balance?.symbol}`}
+        /> */}
       </div>
       <div className="md:hidden block">
-        {pathname === "/accountDetail" || pathname === "/admin" ? (
+        {pathname === "/streams" || pathname === "/admin" ? (
           <Link href="/" className="">
             <span className="w-[33px] h-[33px] flex items-center justify-center rounded-full bg-[#F9FBFC] cursor-pointer transition duration-300 ease-in-out hover:bg-[#F8F8F8]/70">
               <CloseSvg width={24} height={24} />
@@ -111,7 +138,7 @@ const Authenticated = ({
         ) : (
           <span className="w-[33px] h-[33px] flex items-center justify-center rounded-full bg-[#F8F8F8] cursor-pointer transition duration-300 ease-in-out hover:bg-[#F8F8F8]/70">
             <Link
-              href={"/accountDetail"}
+              href={"/streams"}
               className="p-[5px] rounded-full bg-[#F9FBFC] cursor-pointer transition duration-300 ease-in-out hover:bg-[#F9FBFC]/40"
             >
               <MenuSvg />

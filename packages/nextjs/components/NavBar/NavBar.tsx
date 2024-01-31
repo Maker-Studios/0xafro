@@ -5,6 +5,9 @@ import Fund from "../AccountDetailsComponents/Fund";
 import { Bag, CloseSvg, MenuSvg } from "../Icons/Icons";
 import Logo from "../Icons/Logo";
 import Authenticated from "./Authenticated";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
+import { isAddress } from "viem";
+import { useAccount } from "wagmi";
 import { cn } from "~~/lib/utils";
 
 interface NavBarProps {
@@ -12,10 +15,14 @@ interface NavBarProps {
 }
 
 const NavBar = ({ className }: NavBarProps) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isAccountOpen, setIsAccountOpen] = useState<boolean>(false);
   const [isFundOpen, setIsFundOpen] = useState<boolean>(false);
+
+  const { address } = useAccount();
+  const { openConnectModal } = useConnectModal();
+
+  const isAuthenticated = isAddress(address ?? "");
 
   const pathname = usePathname() || "";
 
@@ -31,29 +38,23 @@ const NavBar = ({ className }: NavBarProps) => {
         </span>
       </div>
       <div className={cn("flex items-center md:space-x-6 space-x-1")}>
+        {/* <Fund isFundOpen={isFundOpen} setIsFundOpen={setIsFundOpen} ensName="leyeconnect.eth" isAuthenticated={true} /> */}
         {isAuthenticated ? (
           <Authenticated
             pathname={pathname}
             isAccountOpen={isAccountOpen}
             isAuthenticated={isAuthenticated}
-            setIsAuthenticated={setIsAuthenticated}
             isFundOpen={isFundOpen}
             setIsFundOpen={setIsFundOpen}
           />
         ) : (
           <div className=" md:flex hidden items-center space-x-[20px]">
-            <Fund
-              isFundOpen={isFundOpen}
-              setIsFundOpen={setIsFundOpen}
-              ensName="leyeconnect.eth"
-              isAuthenticated={true}
-            />
             <span
               className={cn(
                 "hidden md:flex items-center space-x-[11px] pr-[11px] pl-[9px] py-[5px] bg-[#F9FBFC] rounded-full cursor-pointer transition duration-300 ease-in-out hover:bg-[#F9FBFC]/40",
                 isAuthenticated && "hidden",
               )}
-              onClick={() => setIsAuthenticated(true)}
+              onClick={() => openConnectModal && openConnectModal()}
             >
               <Bag />
               <p>Connect wallet</p>
@@ -62,7 +63,7 @@ const NavBar = ({ className }: NavBarProps) => {
         )}
 
         <div>
-          {pathname === "/accountDetail" || pathname === "/admin" ? (
+          {pathname === "/streams" || pathname === "/admin" ? (
             <Link href="/" className="md:block hidden">
               <span className="w-[33px] h-[33px] flex items-center justify-center rounded-full bg-[#F9FBFC] cursor-pointer transition duration-300 ease-in-out hover:bg-[#F9FBFC]/70">
                 <CloseSvg width={24} height={24} />
@@ -70,7 +71,7 @@ const NavBar = ({ className }: NavBarProps) => {
             </Link>
           ) : (
             <Link
-              href={"/accountDetail"}
+              href={"/streams"}
               className="hidden md:block p-[5px] rounded-full bg-[#F9FBFC] cursor-pointer transition duration-300 ease-in-out hover:bg-[#F9FBFC]/40"
             >
               <MenuSvg />
@@ -80,27 +81,22 @@ const NavBar = ({ className }: NavBarProps) => {
       </div>
 
       <div className={cn("md:space-x-4 space-x-2 md:hidden flex items-center", isAuthenticated && "hidden")}>
-        <span
-          className="w-[33px] h-[33px] flex items-center justify-center rounded-full cursor-pointer bg-[#F9FBFC]"
-          onClick={() => {
-            setIsAuthenticated(prev => !prev);
-          }}
-        >
+        <span className="w-[33px] h-[33px] flex items-center justify-center rounded-full cursor-pointer bg-[#F9FBFC]">
           <Bag />
         </span>
         <div className="flex flex-row-reverse gap-2 items-center ">
-          {pathname === "/accountDetail" || pathname === "/admin" ? (
+          {pathname === "/streams" || pathname === "/admin" ? (
             <Link href="/" className="">
               <span
                 className="w-[33px] h-[33px] flex items-center justify-center rounded-full bg-[#F9FBFC] cursor-pointer transition duration-300 ease-in-out hover:bg-[#F9FBFC]/70"
-                // onClick={() => setIsAuthenticated(false)}
+              // onClick={() => setIsAuthenticated(false)}
               >
                 <CloseSvg width={24} height={24} />
               </span>
             </Link>
           ) : (
             <Link
-              href="/accountDetail"
+              href="/streams"
               className="w-[33px] h-[33px] flex items-center justify-center rounded-full cursor-pointer bg-[#F9FBFC] hover:bg-[#F9FBFC]/70"
             >
               <MenuSvg />

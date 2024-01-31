@@ -8,6 +8,7 @@ import {
   safeWallet,
   walletConnectWallet,
 } from "@rainbow-me/rainbowkit/wallets";
+import { createPublicClient, http } from "viem";
 import * as chains from "viem/chains";
 import { configureChains } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
@@ -23,6 +24,15 @@ const { onlyLocalBurnerWallet } = scaffoldConfig;
 const enabledChains = targetNetworks.find(network => network.id === 1)
   ? targetNetworks
   : [...targetNetworks, chains.mainnet];
+
+const getViemClient = (chainId: number) => {
+  const chain = enabledChains.find(n => n.id === chainId);
+
+  return createPublicClient({
+    chain,
+    transport: http(),
+  });
+};
 
 /**
  * Chains for the app
@@ -41,8 +51,8 @@ export const appChains = configureChains(
     // Sets pollingInterval if using chains other than local hardhat chain
     ...(targetNetworks.find(network => network.id !== chains.hardhat.id)
       ? {
-          pollingInterval: scaffoldConfig.pollingInterval,
-        }
+        pollingInterval: scaffoldConfig.pollingInterval,
+      }
       : {}),
   },
 );
@@ -57,10 +67,10 @@ const wallets = [
   rainbowWallet(walletsOptions),
   ...(!targetNetworks.some(network => network.id !== chains.hardhat.id) || !onlyLocalBurnerWallet
     ? [
-        burnerWalletConfig({
-          chains: appChains.chains.filter(chain => targetNetworks.map(({ id }) => id).includes(chain.id)),
-        }),
-      ]
+      burnerWalletConfig({
+        chains: appChains.chains.filter(chain => targetNetworks.map(({ id }) => id).includes(chain.id)),
+      }),
+    ]
     : []),
   safeWallet({ ...walletsOptions }),
 ];

@@ -1,6 +1,7 @@
 import Contributor from "./Contributor";
+import { BuilderData } from "~~/types/utils";
 
-const HackerEthStreams = () => {
+const HackerEthStreams = ({ builders }: { builders: BuilderData[] }) => {
   return (
     <div className="space-y-6 bg-[#F9FBFC] p-4 rounded-[24px]">
       <p className="font-medium leading-6 font-ibm_plex_mono">Hacker ETH Streams</p>
@@ -10,9 +11,9 @@ const HackerEthStreams = () => {
           boxShadow: "0px 0.5px 0px 0px rgba(145, 215, 255, 0.50)",
         }}
       >
-        <Contributor ensName="leyeconnect.eth" amount="0.136" image="/avatar.png" />
-        <Contributor ensName="mazikvng.eth" amount="0.237" />
-        <Contributor ensName="moscode.eth" amount="0.0237" />
+        {builders.map(builder => (
+          <Contributor key={builder.builderAddress} {...builder} />
+        ))}
       </div>
     </div>
   );

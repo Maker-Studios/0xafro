@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { CloseSvg, DeleteSvg, ImageSvg } from "../Icons/Icons";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent } from "../ui/dialog";
@@ -7,17 +7,33 @@ import { toast } from "../ui/use-toast";
 import Currency from "./Currency";
 import { ImageObject } from "./StreamContractBalance";
 import { AnimatePresence, motion } from "framer-motion";
+import { Oval } from "react-loader-spinner";
 import { v4 } from "uuid";
+import { parseEther } from "viem";
+import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { Currencies } from "~~/utils/enums";
 import { fileToDataURI } from "~~/utils/helper";
 
 interface WithDrawProps {
   isWithdrawOpen: boolean;
   setIsWithdrawOpen: Dispatch<SetStateAction<boolean>>;
+  usdPrice: number;
 }
-const WithDraw = ({ setIsWithdrawOpen, isWithdrawOpen }: WithDrawProps) => {
+const WithDraw = ({ setIsWithdrawOpen, isWithdrawOpen, usdPrice }: WithDrawProps) => {
   const [currency, setCurrency] = useState<Currencies>(Currencies.ETH);
+  const [ethAmount, setETHAmount] = useState<string>("");
   const [images, setImages] = useState<ImageObject[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [reason, setReason] = useState<string>("");
+
+  const { writeAsync: withdrawFromStream } = useScaffoldContractWrite({
+    contractName: "BuilderStreams",
+    functionName: "streamWithdraw",
+    args: [0n, ""],
+    onSuccess() {
+      setLoading(false);
+    },
+  });
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files || [];
@@ -70,6 +86,24 @@ const WithDraw = ({ setIsWithdrawOpen, isWithdrawOpen }: WithDrawProps) => {
     });
   };
 
+  const handleWithdrawal = async () => {
+    try {
+      setLoading(true);
+      await withdrawFromStream({ args: [parseEther(ethAmount), reason] });
+    } catch (error) {
+      // TODO : Handle stream withdrawal error here
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (!isWithdrawOpen) {
+      setETHAmount("");
+      setLoading(false);
+      setReason("");
+    }
+  }, [isWithdrawOpen]);
+
   return (
     <>
       <Button
@@ -96,8 +130,9 @@ const WithDraw = ({ setIsWithdrawOpen, isWithdrawOpen }: WithDrawProps) => {
               placeholder="Reason for withdrawing and link to github plz"
               defaultChecked={false}
               autoFocus={false}
+              onChange={e => setReason(e.target.value)}
             />
-            <div className="flex justify-start">
+            {/* <div className="flex justify-start">
               <span className="flex items-center space-x-1 bg-[#F9F9F9] p-2 text-black rounded-[8px] hover:bg-[#F9F9F9]/75 relative">
                 <ImageSvg />
                 <p className="text-[12px] font-medium">Add image</p>
@@ -113,9 +148,9 @@ const WithDraw = ({ setIsWithdrawOpen, isWithdrawOpen }: WithDrawProps) => {
                   multiple
                 />
               </span>
-            </div>
+            </div> */}
           </div>
-          <AnimatePresence initial={false}>
+          {/* <AnimatePresence initial={false}>
             {images.length !== 0 && (
               <motion.div
                 initial={{ opacity: 0, y: -30 }}
@@ -154,14 +189,30 @@ const WithDraw = ({ setIsWithdrawOpen, isWithdrawOpen }: WithDrawProps) => {
                 </AnimatePresence>
               </motion.div>
             )}
-          </AnimatePresence>
+          </AnimatePresence> */}
 
-          <Currency currency={currency} setCurrency={setCurrency} />
+          <Currency currency={currency} setCurrency={setCurrency} usdPrice={usdPrice} setETHAmount={setETHAmount} />
 
           <div className="flex w-full justify-end space-x-3">
             <Button
-              text="Confirm Withdrawal"
+              iconPosition="left"
+              text={loading ? "Withdrawing..." : "Confirm Withdrawal"}
               className="bg-[#000] text-[16px] font-medium px-[14px] py-[20px] h-0 rounded-full transition duration-150 ease-in-out hover:bg-[#000]/80"
+              onClick={handleWithdrawal}
+              disabled={loading}
+              icon={
+                loading ? (
+                  <Oval
+                    visible={true}
+                    height="20"
+                    width="20"
+                    color="white"
+                    ariaLabel="oval-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                  />
+                ) : undefined
+              }
             />
           </div>
         </DialogContent>

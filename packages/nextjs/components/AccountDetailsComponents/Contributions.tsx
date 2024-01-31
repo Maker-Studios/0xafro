@@ -1,85 +1,20 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 /* eslint-disable react/jsx-key */
 import { useState } from "react";
-import { Button } from "../ui/button";
+import Activities from "./Activities";
 import Contribution from "./Contribution";
+import { formatDate } from "date-fns";
 import { AnimatePresence, motion } from "framer-motion";
-import { v4 } from "uuid";
-import { cn } from "~~/lib/utils";
+// import { v4 } from "uuid";
+import { Activity } from "~~/types/utils";
 
-const Contributions = () => {
-  const [visibleContributions, setVisibleContributions] = useState(4);
-  const allContributions = [
-    <Contribution
-      image="/avatar.png"
-      ensName="leyeconnect.eth"
-      destribution="Blockchain implementation of usePage3 with Sacffold eth : https://github.com/Maker-Studios/usepage3-scaffold"
-      date="2023-10-01"
-      coverImages={[
-        { id: v4(), url: "/Frame40.png" },
-        { id: v4(), url: "/1.jpg" },
-      ]}
-    />,
-    <Contribution
-      ensName="mazikvng.eth"
-      destribution="Technical Implementation for usePage3"
-      date="2023-10-01"
-      coverImages={[
-        { id: v4(), url: "/Frame40.png" },
-        { id: v4(), url: "/2.jpg" },
-        { id: v4(), url: "/3.jpg" },
-        { id: v4(), url: "/Frame40.png" },
-      ]}
-    />,
-    <Contribution
-      image="/avatar.png"
-      ensName="leyeconnect.eth"
-      destribution="Blockchain implementation of usePage3 with Sacffold eth : https://github.com/Maker-Studios/usepage3-scaffold"
-      date="2023-10-01"
-      coverImages={[{ id: v4(), url: "/Frame40.png" }]}
-    />,
-    <Contribution
-      ensName="mazikvng.eth"
-      destribution="Blockchain implementation of usePage3 with Sacffold eth : https://github.com/Maker-Studios/usepage3-scaffold"
-      date="2023-10-01"
-    />,
-    <Contribution
-      ensName="mazikvng.eth"
-      destribution="Blockchain implementation of usePage3 with Sacffold eth : https://github.com/Maker-Studios/usepage3-scaffold"
-      date="2023-10-01"
-    />,
-    <Contribution
-      ensName="mazikvng.eth"
-      destribution="Technical Implementation for usePage3"
-      date="2023-10-01"
-      coverImages={[
-        { id: v4(), url: "/Frame40.png" },
-        { id: v4(), url: "/Frame40.png" },
-        { id: v4(), url: "/Frame40.png" },
-        { id: v4(), url: "/Frame40.png" },
-      ]}
-    />,
-    <Contribution
-      image="/avatar.png"
-      ensName="leyeconnect.eth"
-      destribution="Blockchain implementation of usePage3 with Sacffold eth : https://github.com/Maker-Studios/usepage3-scaffold"
-      date="2023-10-01"
-      coverImages={[
-        { id: v4(), url: "/Frame40.png" },
-        { id: v4(), url: "/Frame40.png" },
-      ]}
-    />,
-  ];
-  const contributions = allContributions.slice(0, visibleContributions);
-
-  const loadMoreContributions = () => {
-    setVisibleContributions(prev => prev + 4);
-  };
-  const resetContributions = () => {
-    setVisibleContributions(4);
-  };
+const Contributions = ({ activities }: { activities: Activity[] }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const contributions = activities.slice(0, 3);
 
   return (
-    <div className="space-y-2 w-full ">
+    <div className="space-y-2 w-full">
       <AnimatePresence initial={false}>
         {contributions.map((contribution, i) => (
           <motion.div
@@ -92,26 +27,24 @@ const Contributions = () => {
             }}
             key={i}
           >
-            {contribution}
+            <Contribution
+              key={contribution.args.reason}
+              address={contribution.args.to}
+              reason={contribution.args.reason}
+              amount={contribution.args.amount}
+              date={formatDate(Number(contribution.block.timestamp) * 1000, "yyyy-MM-dd")}
+              // coverImages={[
+              //   { id: v4(), url: "/Frame40.png" },
+              //   { id: v4(), url: "/2.jpg" },
+              //   { id: v4(), url: "/3.jpg" },
+              //   { id: v4(), url: "/Frame40.png" },
+              // ]}
+            />
           </motion.div>
         ))}
       </AnimatePresence>
-      <div className={cn("flex justify-center", visibleContributions === contributions.length + 1 && "hidden")}>
-        <Button
-          text="Load more contributions"
-          variant={"ghost"}
-          className="py-[17px] px-2 h-0 border-[0.5px] border-[#E1E1E1] bg-white rounded-full text-[12px]"
-          onClick={loadMoreContributions}
-        />
-      </div>
-      <div className={cn("hidden justify-center", visibleContributions === contributions.length + 1 && "flex")}>
-        <Button
-          text="Show less"
-          variant={"ghost"}
-          className="py-[17px] px-2 h-0 border-[0.5px] border-[#E1E1E1] bg-white rounded-full text-[12px]"
-          onClick={resetContributions}
-        />
-      </div>
+
+      <Activities isOpen={isOpen} setIsOpen={setIsOpen} activities={activities} />
     </div>
   );
 };
