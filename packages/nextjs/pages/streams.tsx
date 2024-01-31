@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useAccount } from "wagmi";
 import {
   Contributions,
   HackerEthStreams,
   Projects,
   StreamContractBalance,
 } from "~~/components/AccountDetailsComponents";
-import RecentFunding from "~~/components/AccountDetailsComponents/RecentFunding";
+// import RecentFunding from "~~/components/AccountDetailsComponents/RecentFunding";
 import OthersLayout from "~~/components/layouts/OthersLayout";
 import deployedContracts from "~~/contracts/deployedContracts";
 import { useScaffoldContractRead, useScaffoldEventHistory } from "~~/hooks/scaffold-eth";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth/useTargetNetwork";
-import { useAccount } from "wagmi";
 
 const AccountDetailPage = () => {
   const [builderList, setBuilderList] = useState<string[]>([]);

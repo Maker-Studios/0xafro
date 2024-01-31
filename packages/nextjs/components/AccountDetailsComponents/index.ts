@@ -1,3 +1,4 @@
+export { default as Activities } from "./Activities";
 export { default as Contributions } from "./Contributions";
 export { default as HackerEthStreams } from "./HackerEthStreams";
 export { default as ImagesSlides } from "./ImagesSlides";

@@ -1,23 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 /* eslint-disable react/jsx-key */
 import { useState } from "react";
-import { Button } from "../ui/button";
+import Activities from "./Activities";
 import Contribution from "./Contribution";
 import { formatDate } from "date-fns";
 import { AnimatePresence, motion } from "framer-motion";
 // import { v4 } from "uuid";
-import { cn } from "~~/lib/utils";
 import { Activity } from "~~/types/utils";
 
 const Contributions = ({ activities }: { activities: Activity[] }) => {
-  const [visibleContributions, setVisibleContributions] = useState(3);
-  const contributions = activities.slice(0, visibleContributions);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const contributions = activities.slice(0, 3);
 
-  const loadMoreContributions = () => {
-    setVisibleContributions(prev => prev + 3);
-  };
-  const resetContributions = () => {
-    setVisibleContributions(3);
-  };
+  // const loadMoreContributions = () => {
+  //   setVisibleContributions(prev => prev + 3);
+  // };
 
   return (
     <div className="space-y-2 w-full">
@@ -50,22 +48,7 @@ const Contributions = ({ activities }: { activities: Activity[] }) => {
         ))}
       </AnimatePresence>
 
-      <div className={cn("flex justify-center", visibleContributions === activities.length + 1 && "hidden")}>
-        <Button
-          text="Load more contributions"
-          variant={"ghost"}
-          className="py-[17px] px-2 h-0 border-[0.5px] border-[#E1E1E1] bg-white rounded-full text-[12px]"
-          onClick={loadMoreContributions}
-        />
-      </div>
-      <div className={cn("hidden justify-center", visibleContributions > activities.length + 1 && "flex")}>
-        <Button
-          text="Show less"
-          variant={"ghost"}
-          className="py-[17px] px-2 h-0 border-[0.5px] border-[#E1E1E1] bg-white rounded-full text-[12px]"
-          onClick={resetContributions}
-        />
-      </div>
+      <Activities isOpen={isOpen} setIsOpen={setIsOpen} activities={activities} />
     </div>
   );
 };
