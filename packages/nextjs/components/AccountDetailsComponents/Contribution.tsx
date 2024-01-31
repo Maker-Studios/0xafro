@@ -28,7 +28,6 @@ const Contribution = ({ date, address, amount, reason, coverImages }: Contributi
   const [selectionId, setSelectionId] = useState<ImageObject["id"]>("");
 
   //TODO: Inserting cover images array
-
   const coverImageToMap = coverImages?.slice(0, 3);
 
   const { data: ensName } = useEnsName({
@@ -41,6 +40,7 @@ const Contribution = ({ date, address, amount, reason, coverImages }: Contributi
     enabled: !!ensName,
     chainId: 1,
   });
+
 
   const handleCopyClick = async () => {
     try {

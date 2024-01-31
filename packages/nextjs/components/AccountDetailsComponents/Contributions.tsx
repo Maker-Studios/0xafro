@@ -13,10 +13,6 @@ const Contributions = ({ activities }: { activities: Activity[] }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const contributions = activities.slice(0, 3);
 
-  // const loadMoreContributions = () => {
-  //   setVisibleContributions(prev => prev + 3);
-  // };
-
   return (
     <div className="space-y-2 w-full">
       <AnimatePresence initial={false}>
