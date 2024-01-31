@@ -5,19 +5,21 @@ const Projects = () => {
     <div className="space-y-6">
       <ProjectCard
         name="Token legacy"
-        description="Blockchain implementation of usePage3 with Sacffold eth: https://github.com/..."
+        description="Safely send assets to designated beneficiaries at the event of your passing."
         status="ongoing"
         image="/tokenlegacy.jpg"
       />
+
       <ProjectCard
         name="Mypage3"
-        description="Blockchain implementation of usePage3 with Sacffold eth: https://github.com/..."
+        description="Blockchain-powered profile builder for decentralized identity management and verification."
         status="completed"
         image="/mypage3.jpg"
       />
+
       <ProjectCard
         name="Multidrop"
-        description="Blockchain implementation of usePage3 with Sacffold eth: https://github.com/..."
+        description="Send tokens to multiple addresses in one transaction."
         status="live"
         image="/multidrop.jpg"
       />

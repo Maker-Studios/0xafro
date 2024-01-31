@@ -61,7 +61,7 @@ const ProductCard = ({ image, description, name, status }: ProductCardProps) => 
             {status === "completed" && <CompletedSvg />}
             {status === "live" && <LiveSvg />}
 
-            <p className={cn("text-[12px]")} style={{ color: accent.color }}>
+            <p className={cn("text-[12px] capitalize")} style={{ color: accent.color }}>
               {status}
             </p>
           </div>
