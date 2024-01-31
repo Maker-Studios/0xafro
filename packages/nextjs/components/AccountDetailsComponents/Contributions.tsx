@@ -13,10 +13,10 @@ const Contributions = ({ activities }: { activities: Activity[] }) => {
   const contributions = activities.slice(0, visibleContributions);
 
   const loadMoreContributions = () => {
-    setVisibleContributions(prev => prev + 4);
+    setVisibleContributions(prev => prev + 3);
   };
   const resetContributions = () => {
-    setVisibleContributions(4);
+    setVisibleContributions(3);
   };
 
   return (
@@ -39,19 +39,26 @@ const Contributions = ({ activities }: { activities: Activity[] }) => {
               reason={contribution.args.reason}
               amount={contribution.args.amount}
               date={formatDate(Number(contribution.block.timestamp) * 1000, "yyyy-MM-dd")}
+              // coverImages={[
+              //   { id: v4(), url: "/Frame40.png" },
+              //   { id: v4(), url: "/2.jpg" },
+              //   { id: v4(), url: "/3.jpg" },
+              //   { id: v4(), url: "/Frame40.png" },
+              // ]}
             />
           </motion.div>
         ))}
       </AnimatePresence>
-      <div className={cn("flex justify-center", visibleContributions === contributions.length + 1 && "hidden")}>
+
+      <div className={cn("flex justify-center", visibleContributions === activities.length + 1 && "hidden")}>
         <Button
-          text="Show more contributions"
+          text="Load more contributions"
           variant={"ghost"}
           className="py-[17px] px-2 h-0 border-[0.5px] border-[#E1E1E1] bg-white rounded-full text-[12px]"
           onClick={loadMoreContributions}
         />
       </div>
-      <div className={cn("hidden justify-center", visibleContributions === contributions.length + 1 && "flex")}>
+      <div className={cn("hidden justify-center", visibleContributions > activities.length + 1 && "flex")}>
         <Button
           text="Show less"
           variant={"ghost"}
