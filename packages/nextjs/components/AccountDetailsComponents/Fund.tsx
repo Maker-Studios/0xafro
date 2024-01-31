@@ -2,7 +2,6 @@ import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import { Bag, CheckedSvg, CloseSvg, CopySvg } from "../Icons/Icons";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent } from "../ui/dialog";
-import { Textarea } from "../ui/textarea";
 import Currency from "./Currency";
 import { Oval } from "react-loader-spinner";
 import { isAddress, parseEther } from "viem";
@@ -23,7 +22,7 @@ const Fund = ({ isFundOpen, setIsFundOpen, address, streamAddress, isAuthenticat
   const [currency, setCurrency] = useState<Currencies>(Currencies.ETH);
   const [fundAmount, setFundAmount] = useState<string>("");
   const [copied, setCopied] = useState(false);
-  const [reason, setReason] = useState<string>("");
+  // const [reason, setReason] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   const client = usePublicClient();

@@ -1,18 +1,13 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { CloseSvg, DeleteSvg, ImageSvg } from "../Icons/Icons";
+import { CloseSvg } from "../Icons/Icons";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent } from "../ui/dialog";
 import { Textarea } from "../ui/textarea";
-import { toast } from "../ui/use-toast";
 import Currency from "./Currency";
-import { ImageObject } from "./StreamContractBalance";
-import { AnimatePresence, motion } from "framer-motion";
 import { Oval } from "react-loader-spinner";
-import { v4 } from "uuid";
 import { parseEther } from "viem";
 import { useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 import { Currencies } from "~~/utils/enums";
-import { fileToDataURI } from "~~/utils/helper";
 
 interface WithDrawProps {
   isWithdrawOpen: boolean;
@@ -22,7 +17,7 @@ interface WithDrawProps {
 const WithDraw = ({ setIsWithdrawOpen, isWithdrawOpen, usdPrice }: WithDrawProps) => {
   const [currency, setCurrency] = useState<Currencies>(Currencies.ETH);
   const [ethAmount, setETHAmount] = useState<string>("");
-  const [images, setImages] = useState<ImageObject[]>([]);
+  // const [images, setImages] = useState<ImageObject[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [reason, setReason] = useState<string>("");
 
@@ -35,56 +30,56 @@ const WithDraw = ({ setIsWithdrawOpen, isWithdrawOpen, usdPrice }: WithDrawProps
     },
   });
 
-  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files || [];
-    const imagesLeght = images.length;
-    const totalImages = files.length + imagesLeght;
-    if (files.length > 4 || imagesLeght > 4 || totalImages > 4) {
-      return toast({
-        variant: "destructive",
-        description: "Maximum images is four images",
-      });
-    }
+  // const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const files = event.target.files || [];
+  //   const imagesLeght = images.length;
+  //   const totalImages = files.length + imagesLeght;
+  //   if (files.length > 4 || imagesLeght > 4 || totalImages > 4) {
+  //     return toast({
+  //       variant: "destructive",
+  //       description: "Maximum images is four images",
+  //     });
+  //   }
 
-    try {
-      const updatedImages = await Promise.all(
-        Array.from(files).map(async file => {
-          const url = (await fileToDataURI(file)) as any;
+  //   try {
+  //     const updatedImages = await Promise.all(
+  //       Array.from(files).map(async file => {
+  //         const url = (await fileToDataURI(file)) as any;
 
-          if (url?.error) return;
+  //         if (url?.error) return;
 
-          return { id: v4(), url };
-        }),
-      );
+  //         return { id: v4(), url };
+  //       }),
+  //     );
 
-      setImages((prevImages: ImageObject[]) => [
-        ...prevImages,
-        ...(updatedImages.filter(image => image !== undefined) as unknown as ImageObject[]),
-      ]);
-    } catch (error) {
-      console.error("Error processing images:", error);
-      return toast({
-        variant: "destructive",
-        description: `${error}`,
-      });
-    }
-  };
+  //     setImages((prevImages: ImageObject[]) => [
+  //       ...prevImages,
+  //       ...(updatedImages.filter(image => image !== undefined) as unknown as ImageObject[]),
+  //     ]);
+  //   } catch (error) {
+  //     console.error("Error processing images:", error);
+  //     return toast({
+  //       variant: "destructive",
+  //       description: `${error}`,
+  //     });
+  //   }
+  // };
 
-  const deleteImageHandle = (id: string) => {
-    const updatedImages = images.map(image => {
-      if (image.id === id) {
-        image.url = "";
-      }
+  // const deleteImageHandle = (id: string) => {
+  //   const updatedImages = images.map(image => {
+  //     if (image.id === id) {
+  //       image.url = "";
+  //     }
 
-      return image;
-    });
-    const imagesWithUrl = updatedImages.filter(image => image.url !== "");
-    setImages(imagesWithUrl);
-    toast({
-      variant: "default",
-      description: `Image deleted successful`,
-    });
-  };
+  //     return image;
+  //   });
+  //   const imagesWithUrl = updatedImages.filter(image => image.url !== "");
+  //   setImages(imagesWithUrl);
+  //   toast({
+  //     variant: "default",
+  //     description: `Image deleted successful`,
+  //   });
+  // };
 
   const handleWithdrawal = async () => {
     try {

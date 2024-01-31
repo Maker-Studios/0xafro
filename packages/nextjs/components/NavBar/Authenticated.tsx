@@ -1,8 +1,6 @@
 import { Dispatch, HTMLAttributes, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import Fund from "../AccountDetailsComponents/Fund";
 import { Bag, CaretDown, CloseSvg, MenuSvg } from "../Icons/Icons";
-import Account from "./Account";
 import { useAccountModal } from "@rainbow-me/rainbowkit";
 import { isAddress } from "viem";
 import { useAccount, useBalance, useEnsAvatar, useEnsName } from "wagmi";
@@ -21,8 +19,6 @@ interface AuthenticatedProps extends HTMLAttributes<HTMLDivElement> {
 const Authenticated = ({
   // className,
   // setIsAuthenticated,
-  isFundOpen,
-  setIsFundOpen,
   isAuthenticated,
   pathname,
 }: AuthenticatedProps) => {
@@ -82,9 +78,7 @@ const Authenticated = ({
           <Bag />
         </span>
         <span className="space-y-[3px]">
-          <p className="text-[11px] leading-[11px] font-medium">
-            {formattedBalance}
-          </p>
+          <p className="text-[11px] leading-[11px] font-medium">{formattedBalance}</p>
           <p className="leading-[11px] text-[10px] text-red-400">Optimism</p>
         </span>
       </span>

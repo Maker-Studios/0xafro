@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Fund from "../AccountDetailsComponents/Fund";
 import { Bag, CloseSvg, MenuSvg } from "../Icons/Icons";
 import Logo from "../Icons/Logo";
 import Authenticated from "./Authenticated";
@@ -89,7 +88,7 @@ const NavBar = ({ className }: NavBarProps) => {
             <Link href="/" className="">
               <span
                 className="w-[33px] h-[33px] flex items-center justify-center rounded-full bg-[#F9FBFC] cursor-pointer transition duration-300 ease-in-out hover:bg-[#F9FBFC]/70"
-              // onClick={() => setIsAuthenticated(false)}
+                // onClick={() => setIsAuthenticated(false)}
               >
                 <CloseSvg width={24} height={24} />
               </span>
