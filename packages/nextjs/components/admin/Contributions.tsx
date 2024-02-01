@@ -74,7 +74,6 @@ const Contributions = ({ activities }: { activities?: Activity[] }) => {
   ];
   const contributions = allContributions.slice(0, 3);
 
-
   return (
     <div className="space-y-2 w-full">
       <AnimatePresence initial={false}>
@@ -94,7 +93,6 @@ const Contributions = ({ activities }: { activities?: Activity[] }) => {
         ))}
       </AnimatePresence>
       <Activities isOpen={isOpen} setIsOpen={setIsOpen} activities={activities} />
-
     </div>
   );
 };

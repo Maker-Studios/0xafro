@@ -7,6 +7,7 @@ import {
   Projects,
   StreamContractBalance,
 } from "~~/components/AccountDetailsComponents";
+import Loader from "~~/components/Loader";
 // import RecentFunding from "~~/components/AccountDetailsComponents/RecentFunding";
 import OthersLayout from "~~/components/layouts/OthersLayout";
 import deployedContracts from "~~/contracts/deployedContracts";
@@ -23,7 +24,7 @@ const AccountDetailPage = () => {
 
   const isContributor = builderList.includes(address ?? "");
 
-  const { data: allBuildersData } = useScaffoldContractRead({
+  const { data: allBuildersData, isLoading: allBuildersLoading } = useScaffoldContractRead({
     contractName: "BuilderStreams",
     functionName: "allBuildersData",
     args: [builderList],
@@ -35,7 +36,7 @@ const AccountDetailPage = () => {
     fromBlock: BigInt("0"),
   });
 
-  const { data: withdrawEvents } = useScaffoldEventHistory({
+  const { data: withdrawEvents, isLoading } = useScaffoldEventHistory({
     contractName: "BuilderStreams",
     eventName: "Withdraw",
     fromBlock: BigInt("0"),
@@ -68,7 +69,8 @@ const AccountDetailPage = () => {
       >
         <div className="space-y-[48px]">
           <StreamContractBalance address={streamAddress as `0x${string}`} isContributor={isContributor} />
-          {allBuildersData && <HackerEthStreams builders={allBuildersData as []} />}
+          {allBuildersData && <HackerEthStreams builders={allBuildersData as []} isLoading={allBuildersLoading} />}
+
           {/* <div className="space-y-6 bg-[#F9FBFC] p-4 rounded-[24px]">
             <p className="font-ibm_plex_mono font-medium leading-6">Recent funding</p>
             <div className="space-y-4">
@@ -84,6 +86,15 @@ const AccountDetailPage = () => {
         </div>
         <div className="space-y-6 bg-[#F9FBFC] p-4 rounded-[24px]">
           <p className="font-medium font-ibm_plex_mono">Activities</p>
+
+          <>
+            {isLoading && (
+              <div className="pt-10 flex justify-center">
+                <Loader />
+              </div>
+            )}
+          </>
+
           {withdrawEvents && withdrawEvents.length > 0 && <Contributions activities={withdrawEvents as []} />}
         </div>
         <div>
