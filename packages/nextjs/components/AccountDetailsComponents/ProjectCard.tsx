@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { CompletedSvg, LiveSvg, OngoingSvg } from "../Icons/Icons";
 import { cn } from "~~/lib/utils";
 
@@ -7,9 +8,10 @@ interface ProductCardProps {
   description: string;
   name: string;
   status: "ongoing" | "completed" | "live";
+  link: string;
 }
 
-const ProductCard = ({ image, description, name, status }: ProductCardProps) => {
+const ProductCard = ({ image, description, name, status, link }: ProductCardProps) => {
   const handleStatusAccent = () => {
     if (status === "ongoing") {
       return {
@@ -47,13 +49,20 @@ const ProductCard = ({ image, description, name, status }: ProductCardProps) => 
         boxShadow: "0px 0.5px 0px 0px rgba(145, 215, 255, 0.50)",
       }}
     >
-      <div className="md:h-[70px] h-[56px] w-48 rounded-[4px] bg-[#E0E0E0]/25 relative overflow-hidden">
-        <img src={image} alt="avatar image" className="w-full h-full " style={{ objectFit: "cover" }} />
+      <div className="md:h-20 h-[56px] w-24 rounded-[4px] bg-[#E0E0E0]/25 overflow-hidden relative">
+        <Image src={image} alt="avatar image" fill style={{ objectFit: "cover" }} />
       </div>
-      <div className="flex flex-col justify-between space-y-6">
+
+      <div className="flex-1 flex flex-col justify-between space-y-6 flex-shrink-0">
         <div className="space-y-2">
           <p className="font-medium leading-6">{name}</p>
           <p className="text-[12px] text-[#878787] font-medium leading-[18px]">{description}</p>
+
+          <div className="text-[12px] text-[#878787] font-medium flex">
+            <a href={link} className="underline leading-[18px]" target="_blank" rel="noreferrer">
+              {link}
+            </a>
+          </div>
         </div>
         <div className="flex items-center justify-end">
           <div className="flex items-center space-x-1 py-1 px-2 rounded-full" style={{ background: accent.bgColor }}>
