@@ -80,7 +80,10 @@ const NavBar = ({ className }: NavBarProps) => {
       </div>
 
       <div className={cn("md:space-x-4 space-x-2 md:hidden flex items-center", isAuthenticated && "hidden")}>
-        <span className="w-[33px] h-[33px] flex items-center justify-center rounded-full cursor-pointer bg-[#F9FBFC]">
+        <span
+          className="w-[33px] h-[33px] flex items-center justify-center rounded-full cursor-pointer bg-[#F9FBFC]"
+          onClick={() => openConnectModal && openConnectModal()}
+        >
           <Bag />
         </span>
         <div className="flex flex-row-reverse gap-2 items-center ">
