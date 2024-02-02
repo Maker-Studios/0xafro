@@ -8,7 +8,7 @@ import { Currencies } from "~~/utils/enums";
 interface CurrencyProps {
   currency: Currencies;
   setCurrency: Dispatch<SetStateAction<Currencies>>;
-  usdPrice: number;
+  usdPrice?: number;
   setETHAmount: Dispatch<SetStateAction<string>>;
 }
 const Currency = ({ currency, setCurrency, usdPrice, setETHAmount }: CurrencyProps) => {

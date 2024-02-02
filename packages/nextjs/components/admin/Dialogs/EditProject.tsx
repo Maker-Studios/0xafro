@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import { Dispatch, SetStateAction, useState } from "react";
-import DialogWrapper from "../DialogWrapper";
-import { ImageObject } from "../StreamContractBalance";
+import DialogWrapper from "./DialogWrapper";
 import { AnimatePresence, motion } from "framer-motion";
 import { v4 } from "uuid";
+import { ImageObject } from "~~/components/AccountDetailsComponents/StreamContractBalance";
 import { DeleteSvg, ImageSvg } from "~~/components/Icons/Icons";
 import { Button } from "~~/components/ui/button";
 import { Input } from "~~/components/ui/input";

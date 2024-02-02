@@ -1,28 +1,52 @@
+/* eslint-disable @next/next/no-img-element */
 import { Dispatch, SetStateAction } from "react";
-import DialogWrapper from "../DialogWrapper";
-import { EthSvg } from "~~/components/Icons/Icons";
+import DialogWrapper from "./DialogWrapper";
+import { CompletedSvg, EthSvg, LiveSvg, OngoingSvg } from "~~/components/Icons/Icons";
 import { Button } from "~~/components/ui/button";
 
 interface RemoveProjectProps {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
-  icon: React.ReactNode;
-  settingTitle: string;
-  color: string;
-  bgColor: string;
+  status: "ongoing" | "completed" | "live";
   image: string;
   description: string;
 }
 const RemoveProject = ({
   isOpen,
   setIsOpen,
-  icon,
-  settingTitle,
+  status,
   description,
-  color,
-  bgColor,
+
   image,
 }: RemoveProjectProps) => {
+  const handleStatusAccent = () => {
+    if (status === "ongoing") {
+      return {
+        color: "#9747FF",
+        bgColor: "#F4F3FF",
+      };
+    }
+
+    if (status === "completed") {
+      return {
+        color: "#2360FF",
+        bgColor: "#F4F3FF",
+      };
+    }
+
+    if (status === "live") {
+      return {
+        color: "#03A300",
+        bgColor: "#F6FBF6",
+      };
+    }
+
+    return {
+      color: "",
+      bgColor: "",
+    };
+  };
+  const accent: { color: string; bgColor: string } = handleStatusAccent();
   return (
     <DialogWrapper title="Delete Project" isOpen={isOpen} setIsOpen={setIsOpen}>
       <div className="space-y-6">
@@ -36,10 +60,15 @@ const RemoveProject = ({
               <p className="text-[12px] text-[#878787] font-medium leading-[18px]">{description}</p>
             </div>
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-1 py-1 px-2 rounded-full" style={{ background: bgColor }}>
-                {icon}
-                <p className="text-[12px]" style={{ color: color }}>
-                  {settingTitle}
+              <div
+                className="flex items-center space-x-1 py-1 px-2 rounded-full"
+                style={{ background: accent.bgColor }}
+              >
+                {status === "ongoing" && <OngoingSvg />}
+                {status === "completed" && <CompletedSvg />}
+                {status === "live" && <LiveSvg />}
+                <p className="text-[12px]" style={{ color: accent.color }}>
+                  {status}
                 </p>
               </div>
               <div className="flex items-center space-x-2">

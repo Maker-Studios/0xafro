@@ -1,5 +1,6 @@
 export { default as AddProject } from "./AddProject";
 export { default as AddUser } from "./AddUser";
+export { default as DialogWrapper } from "./DialogWrapper";
 export { default as EditProject } from "./EditProject";
 export { default as EditStream } from "./EditStream";
 export { default as ManagerUsers } from "./ManagerUsers";
