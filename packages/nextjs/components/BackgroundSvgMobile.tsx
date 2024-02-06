@@ -2,7 +2,7 @@
 
 const BackgroundSvgMobile = () => {
   return (
-    <svg width={370} height={426} viewBox="0 0 998 426" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width={970} height={426} viewBox="0 0 998 426" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M799.519 292.163C813.402 288.496 829.292 284.428 831.886 284.228C832.57 284.176 833.774 284.179 835.33 284.225L808.737 219.619L799.519 292.163Z"
         fill="white"

@@ -10,41 +10,40 @@ interface HomeLayoutProps {
 
 const HomeLayout = ({ children }: HomeLayoutProps) => {
   return (
-    <section className="md:h-[130vh] h-full flex flex-col justify-between relative z-50">
-      <motion.span
-        initial={{ opacity: 0, y: -100 }}
-        animate={{ opacity: 1, y: 1 }}
-        transition={{
-          ease: "easeInOut",
-          duration: 0.7,
-        }}
-        className="md:block absolute hidden -z-0 md:bottom-24 -bottom-[170px] h-[100vh] right-0 left-0"
-      >
-        <BackgroundSvg />
-        {/* <img src="/background.svg" /> */}
-      </motion.span>
-      <motion.span
-        initial={{ opacity: 0, y: -200 }}
-        animate={{ opacity: 1, y: 1 }}
-        transition={{
-          ease: "easeInOut",
-          duration: 0.5,
-        }}
-        className="absolute md:hidden -z-0  bottom-[10px] right-0 left-0"
-      >
-        {/* <BackgroundSvg width={375} height={522} /> */}
-
-        <BackgroundSvgMobile />
-        {/* <img src="/backgroundMobil.svg" /> */}
-      </motion.span>
-
+    <section className="md:h-[120vh] 2xl:h-[90vh] h-full flex flex-col justify-between relative z-50">
       <NavBar />
-
-      <div>
+      <div className="relative 2xl:container">
         {children}
 
-        <Footer className="relative" />
+        <motion.span
+          initial={{ opacity: 0, y: -100 }}
+          animate={{ opacity: 1, y: 1 }}
+          transition={{
+            ease: "easeInOut",
+            duration: 0.7,
+          }}
+          className="md:block absolute hidden  md:-bottom-[170px] -z-20 right-0 left-0"
+        >
+          <BackgroundSvg />
+          {/* <img src="/background.svg" /> */}
+        </motion.span>
+        <motion.span
+          initial={{ opacity: 0, y: -200 }}
+          animate={{ opacity: 1, y: 1 }}
+          transition={{
+            ease: "easeInOut",
+            duration: 0.5,
+          }}
+          className="absolute md:hidden  -bottom-[270px] right-0 -z-40"
+        >
+          {/* <BackgroundSvg width={375} height={522} /> */}
+
+          <BackgroundSvgMobile />
+          {/* <img src="/backgroundMobil.svg" /> */}
+        </motion.span>
       </div>
+
+      <Footer className="relative" />
     </section>
   );
 };

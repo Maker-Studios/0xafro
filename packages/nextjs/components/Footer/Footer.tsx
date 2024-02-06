@@ -9,7 +9,7 @@ const Footer = ({ className }: FooterProps) => {
   return (
     <footer
       className={cn(
-        "flex  mt-0 space-y-6 md:flex-row flex-col md:items-center items-start md:justify-between justify-start font-ibm_plex_mono font-medium md:py-[50px] py-[24px] md:container px-6",
+        "flex mt-[250px] md:mt-0 2xl:mt-0 space-y-6 md:flex-row flex-col md:items-center items-start md:justify-between justify-start font-ibm_plex_mono font-medium md:py-[50px] py-[24px] md:container px-6",
         className,
       )}
     >
