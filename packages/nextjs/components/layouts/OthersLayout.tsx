@@ -12,7 +12,7 @@ const OthersLayout = ({ children }: OthersLayoutProps) => {
 
       {children}
 
-      <Footer />
+      <Footer className="mt-[40px] md:mt-0 2xl:mt-0" />
     </>
   );
 };

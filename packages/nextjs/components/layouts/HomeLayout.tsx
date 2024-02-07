@@ -40,7 +40,7 @@ const HomeLayout = ({ children }: HomeLayoutProps) => {
         {/* <img src="/backgroundMobil.svg" /> */}
       </motion.span>
 
-      <Footer className="relative" />
+      <Footer className="relative mt-[250px] md:mt-0 2xl:mt-0" />
     </section>
   );
 };
