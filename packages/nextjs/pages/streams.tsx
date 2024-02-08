@@ -84,18 +84,20 @@ const AccountDetailPage = () => {
             </div>
           </div> */}
         </div>
-        <div className="space-y-6 bg-[#F9FBFC] p-4 rounded-[24px]">
-          <p className="font-medium font-ibm_plex_mono">Activities</p>
+        <div>
+          <div className="space-y-6 bg-[#F9FBFC] p-4 rounded-[24px]">
+            <p className="font-medium font-ibm_plex_mono">Activities</p>
 
-          <>
-            {isLoading && (
-              <div className="pt-10 flex justify-center">
-                <Loader />
-              </div>
-            )}
-          </>
+            <>
+              {isLoading && (
+                <div className="pt-10 flex justify-center">
+                  <Loader />
+                </div>
+              )}
+            </>
 
-          {withdrawEvents && withdrawEvents.length > 0 && <Contributions activities={withdrawEvents as []} />}
+            {withdrawEvents && withdrawEvents.length > 0 && <Contributions activities={withdrawEvents as []} />}
+          </div>
         </div>
         <div>
           <div className="space-y-6 bg-[#F9FBFC] p-4 rounded-[24px]">

@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import DialogWrapper from "../DialogWrapper";
+import DialogWrapper from "./DialogWrapper";
 import { AvatarSvg } from "~~/components/Icons/Icons";
 import { Button } from "~~/components/ui/button";
 

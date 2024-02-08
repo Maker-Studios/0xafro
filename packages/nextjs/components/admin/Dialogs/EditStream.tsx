@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 /* eslint-disable @next/next/no-img-element */
 import { Dispatch, SetStateAction, useState } from "react";
-import Currency from "../Currency";
-import DialogWrapper from "../DialogWrapper";
 import AddProjectPeopleSelection from "./AddProjectTitleSelection";
+import DialogWrapper from "./DialogWrapper";
 import { v4 } from "uuid";
+import Currency from "~~/components/AccountDetailsComponents/Currency";
 import { AdminSvg, AvatarSvg, DeveloperSvg, DisignerSvg, ProductSvg } from "~~/components/Icons/Icons";
 import { Button } from "~~/components/ui/button";
 import { cn } from "~~/lib/utils";
@@ -76,6 +78,7 @@ const EditStream = ({ isEditStreamOpen, setIsEditStream, ensName: name, title, i
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [ensName, setEnsName] = useState<string>(name);
   const [currency, setCurrency] = useState<Currencies>(Currencies.ETH);
+  const [ethAmount, setETHAmount] = useState<string>("");
   const [titleSelected, setTitleSelected] = useState<Titles | undefined>(title);
 
   const editStreamHandle = () => {
@@ -124,7 +127,7 @@ const EditStream = ({ isEditStreamOpen, setIsEditStream, ensName: name, title, i
           <div className="space-y-4">
             <h6 className="font-medium">Allot stream</h6>
 
-            <Currency currency={currency} setCurrency={setCurrency} />
+            <Currency currency={currency} setCurrency={setCurrency} usdPrice={5} setETHAmount={setETHAmount} />
           </div>
 
           <div className={cn("w-full flex justify-end")} onClick={titleSelected ? editStreamHandle : undefined}>

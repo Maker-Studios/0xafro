@@ -9,8 +9,8 @@ const Welcomeletter = () => {
 
   return (
     <HomeLayout>
-      <div className="md:px-[3.125rem] px-6">
-        <div className="md:w-[440px] w-full font-ibm_plex_mono md:mt-[11.25rem] mt-[108px] md:mb-16 mb-[100px]">
+      <div className="md:px-[3.125rem] px-6 z-50">
+        <div className="md:w-[440px] w-full font-ibm_plex_mono md:mt-12 mt-40 z-50">
           <motion.div
             initial={{ opacity: 0, x: -200 }}
             animate={{ opacity: 1, x: 1 }}

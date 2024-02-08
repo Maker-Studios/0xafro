@@ -1,5 +1,8 @@
+import { useState } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { CompletedSvg, LiveSvg, OngoingSvg } from "../Icons/Icons";
+import DropdownMenuProject from "../admin/Dialogs/DropdownMenuProject";
 import { cn } from "~~/lib/utils";
 
 /* eslint-disable @next/next/no-img-element */
@@ -12,6 +15,9 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ image, description, name, status, link }: ProductCardProps) => {
+  const [isActive, setIsActive] = useState<boolean>(false);
+  const path = usePathname();
+
   const handleStatusAccent = () => {
     if (status === "ongoing") {
       return {
@@ -40,6 +46,10 @@ const ProductCard = ({ image, description, name, status, link }: ProductCardProp
     };
   };
 
+  const activeHandle = () => {
+    setIsActive(prev => !prev);
+  };
+
   const accent: { color: string; bgColor: string } = handleStatusAccent();
 
   return (
@@ -55,7 +65,21 @@ const ProductCard = ({ image, description, name, status, link }: ProductCardProp
 
       <div className="flex-1 flex flex-col justify-between space-y-6 flex-shrink-0">
         <div className="space-y-2">
-          <p className="font-medium leading-6">{name}</p>
+          <span className="flex justify-between items-center  ">
+            <p className="font-medium leading-4">{name}</p>
+            {path === "/admin" && (
+              <span>
+                <DropdownMenuProject
+                  isActive={isActive}
+                  setIsActive={activeHandle}
+                  status={status}
+                  image={image}
+                  projectDescription={description}
+                  projectName={name}
+                />
+              </span>
+            )}
+          </span>
           <p className="text-[12px] text-[#878787] font-medium leading-[18px]">{description}</p>
 
           <div className="text-[12px] text-[#878787] font-medium flex">

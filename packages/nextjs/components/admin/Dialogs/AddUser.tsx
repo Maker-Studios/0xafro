@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Dispatch, SetStateAction, useState } from "react";
-import Currency from "../Currency";
-import DialogWrapper from "../DialogWrapper";
 import AddProjectPeopleSelection from "./AddProjectTitleSelection";
+import DialogWrapper from "./DialogWrapper";
 import User from "./User";
 import { v4 } from "uuid";
+import Currency from "~~/components/AccountDetailsComponents/Currency";
 import { AdminSvg, DeveloperSvg, DisignerSvg, ProductSvg } from "~~/components/Icons/Icons";
 import { Button } from "~~/components/ui/button";
 import { Textarea } from "~~/components/ui/textarea";
@@ -49,6 +50,7 @@ const AddUser = ({ isOpen, setIsOpen }: AddUserProps) => {
   const [isAddNameOpen, setIsAddNameOpen] = useState<boolean>(false);
   const [ensName, setEnsName] = useState<string>("");
   const [currency, setCurrency] = useState<Currencies>(Currencies.ETH);
+  const [ethAmount, setETHAmount] = useState<string>("");
   const [titleSelected, setTitleSelected] = useState<Titles | undefined>(undefined);
 
   const addUserHandle = () => {
@@ -156,7 +158,7 @@ const AddUser = ({ isOpen, setIsOpen }: AddUserProps) => {
               </div>
             </div>
           </div> */}
-          <Currency currency={currency} setCurrency={setCurrency} />
+          <Currency currency={currency} setCurrency={setCurrency} usdPrice={5} setETHAmount={setETHAmount} />
 
           <div className={cn("w-full flex justify-end")} onClick={titleSelected ? addConfirmUserHandle : undefined}>
             <Button

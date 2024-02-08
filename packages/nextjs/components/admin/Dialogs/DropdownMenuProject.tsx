@@ -15,11 +15,8 @@ interface DropdownMenuProjectProps {
   setIsActive: Dispatch<SetStateAction<boolean>>;
   projectDescription: string;
   projectName: string;
-  settingTitle: string;
+  status: "ongoing" | "completed" | "live";
   image: string;
-  textColor: string;
-  bgColor: string;
-  icon: React.ReactNode;
 }
 
 const DropdownMenuProject = ({
@@ -27,11 +24,8 @@ const DropdownMenuProject = ({
   setIsActive,
   projectDescription,
   projectName,
-  settingTitle,
+  status,
   image,
-  textColor,
-  bgColor,
-  icon,
 }: DropdownMenuProjectProps) => {
   const [isEditProjectOpen, setIsEditProjectOpen] = useState<boolean>(false);
   const [isRemoveOpen, setIsRemoveOpen] = useState<boolean>(false);
@@ -106,11 +100,8 @@ const DropdownMenuProject = ({
         isOpen={isRemoveOpen}
         setIsOpen={setIsRemoveOpen}
         description={projectDescription}
-        icon={icon}
-        settingTitle={settingTitle}
+        status={status}
         image={image}
-        color={textColor}
-        bgColor={bgColor}
       />
     </>
   );
