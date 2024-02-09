@@ -10,7 +10,7 @@ interface HomeLayoutProps {
 
 const HomeLayout = ({ children }: HomeLayoutProps) => {
   return (
-    <section className="md:h-[120vh] 2xl:h-[90vh] h-full flex flex-col justify-between relative z-50">
+    <section className="md:h-[119vh] 2xl:h-[90vh] h-full flex flex-col justify-between relative z-50">
       <NavBar />
       <div className="2xl:container md:mt-24 -mt-10">{children}</div>
       <motion.span
